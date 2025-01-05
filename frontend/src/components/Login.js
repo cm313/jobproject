@@ -1,14 +1,18 @@
 import {useRef, useState} from 'react';
 import {Link,useNavigate} from 'react-router-dom'; 
+import {useContext} from 'react';
+import userContext from '../utils/context';
+
 
 const Login = ()=>{
-const userName = useRef(null);
+const {setUserName} = useContext(userContext);
+const [localUserName, setLocalUserName] = useState(null);
 const password = useRef(null);
 const navigate = useNavigate();
-    const [responseData, setResponseData] = useState('');
+const [responseData, setResponseData] = useState('');
     const handleSubmit = async ()=>{
         const obj = {
-            userName: userName?.current?.value,
+            userName: localUserName,
             password: password?.current?.value, 
         }
         if(obj.userName && obj.password){
@@ -23,6 +27,7 @@ const navigate = useNavigate();
               const data = await response.json();
               if(response.ok){
                 localStorage.setItem('accesstoken', JSON.stringify(data.jwtToken));
+                setUserName(localUserName);
                 navigate('/userinterface');
               }
               else{
@@ -38,13 +43,14 @@ const navigate = useNavigate();
     }
     
  return (
+    
     <>
     <div className="border border-black rounded-md w-3/12 mt-8 m-auto right-0 left-0 p-4">
     <form  onSubmit={(e)=>e.preventDefault()}>
         <div className="flex items-center mt-2">
             <div>UserName:</div>
             <div>
-             <input ref={userName} className="border border-black rounded-md p-2 w-full ml-5" type="text"  placeholder="enter user name"></input>
+             <input onChange={(e)=>{setLocalUserName(e?.target?.value)}} className="border border-black rounded-md p-2 w-full ml-5" type="text"  placeholder="enter user name"></input>
             </div>
         </div>
         <div className="flex items-center mt-2">
@@ -61,6 +67,7 @@ const navigate = useNavigate();
     </div>
     <Link to='/'><div className='text-center font-serif mt-2 text-violet-700'>Not a loggedin user, please Register here</div></Link>
     </>
+  
  )
 }
 

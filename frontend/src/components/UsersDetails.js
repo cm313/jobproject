@@ -1,6 +1,7 @@
 import {useRef, useState} from "react"
 import {Link} from "react-router-dom";
 
+
 const UsersDetails = ()=>{
     const firstName = useRef(null);
     const lastName = useRef(null);
@@ -9,7 +10,7 @@ const UsersDetails = ()=>{
     const password = useRef(null);
     const [responseData, setResponseData] = useState('');
     const handleSubmit = async ()=>{
-        const obj = {
+      const obj = {
             firstName: firstName?.current?.value,
             lastName: lastName?.current?.value,
             email: email?.current?.value,
@@ -44,6 +45,7 @@ const UsersDetails = ()=>{
     }
     
  return (
+    
     <>
     <div className="border border-black rounded-md w-3/12 mt-8 m-auto right-0 left-0 p-4">
     <form  onSubmit={(e)=>e.preventDefault()}>
@@ -85,6 +87,7 @@ const UsersDetails = ()=>{
     </div>
     <Link to='/login'><div className='text-center font-serif mt-2 text-violet-700'>A registered user, Please login</div></Link>
     </>
+    
  )
 }
 

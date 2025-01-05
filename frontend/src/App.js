@@ -1,13 +1,18 @@
 import UsersDetails from "./components/UsersDetails";
 import UserInterface from "./components/UserInterface";
 import Login from "./components/Login";
-import {createBrowserRouter} from "react-router-dom";
+import {createBrowserRouter, Outlet} from "react-router-dom";
+import userContext from "./utils/context";
+import { useState } from "react";
 
 function App() {
+  const[userName, setUserName] = useState("");
   return (
+    <userContext.Provider value={{userName, setUserName }}>
     <div className="App">
-     <UsersDetails/>
+     <Outlet/>
     </div>
+    </userContext.Provider>
   );
 }
 
@@ -18,15 +23,16 @@ const appRouter = createBrowserRouter([
     children: [{
       path: '/',
       element:<UsersDetails/>
-    }]
-  },
-  {
-    path:'/login',
-    element:<Login/>
-  },
-  {
-    path: '/userinterface',
-    element: <UserInterface/>
+    },
+    {
+      path:'/login',
+      element:<Login/>
+    },
+    {
+      path: '/userinterface',
+      element: <UserInterface/>
+    }
+  ]
   }
 ])
 
