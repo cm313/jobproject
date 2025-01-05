@@ -10,6 +10,9 @@ const [localUserName, setLocalUserName] = useState(null);
 const password = useRef(null);
 const navigate = useNavigate();
 const [responseData, setResponseData] = useState('');
+           
+      
+
     const handleSubmit = async ()=>{
         const obj = {
             userName: localUserName,
@@ -26,6 +29,7 @@ const [responseData, setResponseData] = useState('');
               });
               const data = await response.json();
               if(response.ok){
+                console.log(data.jwtToken);
                 localStorage.setItem('accesstoken', JSON.stringify(data.jwtToken));
                 setUserName(localUserName);
                 navigate('/userinterface');
